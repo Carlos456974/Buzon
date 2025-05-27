@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ingreso Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Acceso al Panel</h2>
+    <form onsubmit="acceder(event)">
+      <label>Usuario:</label>
+      <input type="text" id="usuario" required>
+      <label>Contraseña:</label>
+      <input type="password" id="clave" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p id="mensaje-error" class="error"></p>
+  </div>
+
+  <script>
+    function acceder(e) {
+      e.preventDefault();
+      const usuario = document.getElementById("usuario").value;
+      const clave = document.getElementById("clave").value;
+      const error = document.getElementById("mensaje-error");
+
+      if (usuario === "admin" && clave === "1234") {
+        window.location.href = "panel.html";
+      } else {
+        error.textContent = "Usuario o clave incorrecta (demo)";
+      }
+    }
+  </script>
+</body>
+</html>
