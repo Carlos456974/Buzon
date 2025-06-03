@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, #0a1e3f, #1f3a68);
+  background: #0a1a2f;
   font-family: 'Roboto', sans-serif;
   height: 100vh;
   display: flex;
@@ -15,32 +15,25 @@ body {
   width: 100%;
   max-width: 650px;
   margin: auto;
-  padding: 20px;
 }
 
 .container {
   background: #ffffff;
+  color: #0a1a2f;
   padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   text-align: center;
-  color: #0a1e3f;
 }
 
 .logo {
   width: 90px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 h2 {
-  margin-bottom: 10px;
-  color: #0a1e3f;
-}
-
-.descripcion {
   margin-bottom: 20px;
-  font-size: 0.95em;
-  color: #2c3e50;
+  color: #0a1a2f;
 }
 
 form {
@@ -55,29 +48,25 @@ select {
   margin-top: 5px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1em;
-}
-
-select {
-  background-color: #f9f9f9;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background-color: #0a1e3f;
+  padding: 14px;
+  background-color: #0a1a2f;
   border: none;
   color: white;
   font-weight: bold;
   font-size: 1em;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #152e5c;
+  background-color: #102544;
 }
 
 .resultado {
@@ -86,27 +75,37 @@ button:hover {
 }
 
 .alerta {
-  background: #eaf4fc;
-  border-left: 5px solid #0a1e3f;
+  background: #eaf5ff;
+  border-left: 5px solid #0a1a2f;
   padding: 15px;
   border-radius: 10px;
-  color: #0a1e3f;
+  color: #0a1a2f;
 }
 
 blockquote {
   background: #f4f4f4;
   padding: 10px;
-  border-left: 3px solid #ccc;
+  border-left: 3px solid #0a1a2f;
   margin: 10px 0;
+  font-style: italic;
 }
 
-.nota {
-  color: #666;
+.nota, .anonimo, .descripcion {
   font-size: 0.9em;
+  color: #444;
+  margin-top: 10px;
 }
 
-.anonimo {
-  font-size: 0.85em;
-  color: #7f8c8d;
+.queja {
+  background: #f4faff;
+  padding: 15px;
   margin-bottom: 15px;
+  border-left: 5px solid #0a1a2f;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
 }
