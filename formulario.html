@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Escribe tu queja</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <img src="logo.jpg" alt="Logo" class="logo" />
+      <h2>Escribe tu Queja</h2>
+      <p id="categoriaMostrada"></p>
+
+      <form id="formNormal">
+        <label>Nombre (opcional):</label>
+        <input type="text" name="nombre" />
+
+        <label>Mensaje:</label>
+        <textarea name="mensaje" rows="5" required></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <div id="resultado" class="resultado"></div>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoria = urlParams.get("categoria") || "Otro";
+    document.getElementById("categoriaMostrada").innerText = `Categoría seleccionada: ${categoria}`;
+
+    document.getElementById("formNormal").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const nombre = this.nombre.value || "Anónimo";
+      const mensaje = this.mensaje.value;
+
+      document.getElementById("resultado").innerHTML = `
+        <div class="alerta">
+          <strong>Categoría:</strong> ${categoria}<br>
+          <strong>De:</strong> ${nombre}<br><br>
+          <blockquote>${mensaje}</blockquote>
+          <p class="nota">(Simulación: este mensaje no se ha guardado realmente)</p>
+        </div>
+      `;
+      this.reset();
+    });
+  </script>
+</body>
+</html>
