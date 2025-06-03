@@ -2,35 +2,44 @@
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  background: linear-gradient(135deg, #0a1e3f, #1f3a68);
   font-family: 'Roboto', sans-serif;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #ffffff;
 }
 
 .wrapper {
   width: 100%;
-  max-width: 600px;
+  max-width: 650px;
   margin: auto;
+  padding: 20px;
 }
 
 .container {
-  background: white;
+  background: #ffffff;
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   text-align: center;
+  color: #0a1e3f;
 }
 
 .logo {
-  width: 80px;
+  width: 90px;
   margin-bottom: 15px;
 }
 
 h2 {
-  margin-bottom: 25px;
+  margin-bottom: 10px;
+  color: #0a1e3f;
+}
+
+.descripcion {
+  margin-bottom: 20px;
+  font-size: 0.95em;
   color: #2c3e50;
 }
 
@@ -39,7 +48,8 @@ form {
 }
 
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   padding: 12px;
   margin-top: 5px;
@@ -49,10 +59,14 @@ textarea {
   font-size: 1em;
 }
 
+select {
+  background-color: #f9f9f9;
+}
+
 button {
   width: 100%;
   padding: 12px;
-  background-color: #3498db;
+  background-color: #0a1e3f;
   border: none;
   color: white;
   font-weight: bold;
@@ -63,7 +77,7 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: #152e5c;
 }
 
 .resultado {
@@ -72,10 +86,11 @@ button:hover {
 }
 
 .alerta {
-  background: #eafaf1;
-  border-left: 5px solid #2ecc71;
+  background: #eaf4fc;
+  border-left: 5px solid #0a1e3f;
   padding: 15px;
   border-radius: 10px;
+  color: #0a1e3f;
 }
 
 blockquote {
@@ -86,21 +101,12 @@ blockquote {
 }
 
 .nota {
-  color: #7f8c8d;
+  color: #666;
   font-size: 0.9em;
 }
 
-.queja {
-  background: #f9f9f9;
-  padding: 15px;
+.anonimo {
+  font-size: 0.85em;
+  color: #7f8c8d;
   margin-bottom: 15px;
-  border-left: 5px solid #3498db;
-  border-radius: 5px;
-  text-align: left;
 }
-
-.error {
-  color: red;
-  margin-top: 10px;
-}
-
