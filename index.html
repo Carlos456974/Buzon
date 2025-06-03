@@ -3,22 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <title>Buzón de Quejas</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="wrapper">
     <div class="container">
       <img src="logo.jpg" alt="Logo" class="logo" />
-      <h2>Buzón de Quejas</h2>
+      <h2>Buzón de Quejas y Sugerencias</h2>
+      <p class="descripcion">
+        Este espacio es anónimo y confidencial. Tu opinión nos ayuda a mejorar el ambiente, la seguridad y la calidad del servicio.
+      </p>
       <form id="formulario">
+        <label>Categoría:</label>
+        <select name="categoria" required>
+          <option value="">-- Selecciona una opción --</option>
+          <option>Prevenir accidentes</option>
+          <option>Aumentar la calidad</option>
+          <option>Mejorar el servicio</option>
+          <option>Reducir costos</option>
+          <option>Mejorar el inmueble</option>
+          <option>Ahorrar tiempo</option>
+          <option>Violencia de género</option>
+        </select>
+
         <label>Nombre (opcional):</label>
         <input type="text" name="nombre" />
 
-        <label>Mensaje:</label>
+        <label>Escribe tu queja o sugerencia:</label>
         <textarea name="mensaje" rows="5" required></textarea>
 
-        <button type="submit">Enviar Queja</button>
+        <p class="anonimo">Tu queja será enviada de forma <strong>anónima</strong>.</p>
+        <button type="submit">Enviar</button>
       </form>
+
       <div id="resultado" class="resultado"></div>
     </div>
   </div>
@@ -27,15 +44,16 @@
     document.getElementById("formulario").addEventListener("submit", function (e) {
       e.preventDefault();
       const nombre = this.nombre.value || "Anónimo";
+      const categoria = this.categoria.value;
       const mensaje = this.mensaje.value;
       const resultado = document.getElementById("resultado");
 
       resultado.innerHTML = `
         <div class="alerta">
-          <strong>Queja enviada:</strong><br>
-          <em>${nombre}</em> escribió:<br>
+          <strong>Categoría:</strong> ${categoria}<br>
+          <strong>De:</strong> ${nombre}<br><br>
           <blockquote>${mensaje}</blockquote>
-          <p class="nota">(Esto es una simulación, no se ha guardado nada)</p>
+          <p class="nota">(Simulación: este mensaje no se ha guardado realmente)</p>
         </div>
       `;
       this.reset();
