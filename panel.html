@@ -2,35 +2,89 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Panel de Quejas</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enviar Queja</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #001f3f;
+      color: white;
+      padding: 2em;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #0074D9;
+    }
+    label {
+      display: block;
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      border-radius: 5px;
+      border: none;
+      padding: 10px;
+      font-size: 1em;
+      resize: vertical;
+    }
+    button {
+      margin-top: 1em;
+      background-color: #0074D9;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    #mensajeEnvio {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="container">
-      <img src="logo.jpg" alt="Logo" class="logo" />
-      <h2>Panel de Quejas</h2>
+  <h1>Enviar Queja</h1>
+  <h2 id="categoriaTitulo"></h2>
 
-      <div class="queja">
-        <strong>Anónimo</strong><br />
-        <small>Fecha: 2025-05-27</small>
-        <p>Necesitamos aire acondicionado, esto parece un horno.</p>
-      </div>
+  <form id="formQueja">
+    <label for="descripcion">Describe tu queja:</label>
+    <textarea id="descripcion" required placeholder="Escribe aquí tu queja..."></textarea>
+    <button type="submit">Enviar Queja</button>
+  </form>
 
-      <div class="queja">
-        <strong>Claudia G.</strong><br />
-        <small>Fecha: 2025-05-25</small>
-        <p>El nuevo jefe grita mucho, es incómodo trabajar así.</p>
-      </div>
+  <div id="mensajeEnvio"></div>
 
-      <div class="queja">
-        <strong>Anónimo</strong><br />
-        <small>Fecha: 2025-05-22</small>
-        <p>La impresora del área 3 nunca funciona. ¡Auxilio!</p>
-      </div>
+  <script>
+    // Obtener categoría desde URL
+    const params = new URLSearchParams(window.location.search);
+    const categoria = params.get('categoria') || "No especificada";
+    document.getElementById('categoriaTitulo').textContent = "Categoría: " + categoria;
 
-      <p class="nota">(Este panel es una simulación. En la versión real aquí se mostrarán las quejas enviadas)</p>
-    </div>
-  </div>
+    // Guardar queja en localStorage (simulación)
+    document.getElementById('formQueja').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const descripcion = document.getElementById('descripcion').value.trim();
+      if (!descripcion) {
+        alert('Por favor escribe tu queja.');
+        return;
+      }
+
+      // Obtener quejas almacenadas o iniciar arreglo
+      const quejas = JSON.parse(localStorage.getItem('quejas')) || [];
+
+      // Agregar nueva queja
+      quejas.push({ categoria, descripcion, fecha: new Date().toISOString() });
+
+      // Guardar nuevamente
+      localStorage.setItem('quejas', JSON.stringify(quejas));
+
+      // Mensaje y limpiar formulario
+      document.getElementById('mensajeEnvio').textContent = "Queja enviada con éxito. Gracias por tu aporte.";
+      document.getElementById('descripcion').value = '';
+    });
+  </script>
 </body>
 </html>
