@@ -2,36 +2,124 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Ingreso Admin</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administrador - Buzón de Quejas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6fa;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #0a3d62;
+    }
+
+    #adminPanel {
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #0a3d62;
+      color: white;
+    }
+
+    #login input {
+      padding: 10px;
+      margin-right: 10px;
+    }
+
+    .category-count {
+      font-weight: bold;
+      color: #0a3d62;
+    }
+  </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="container">
-      <img src="logo.jpg" alt="Logo" class="logo" />
-      <h2>Acceso al Panel</h2>
-      <form onsubmit="acceder(event)">
-        <label>Usuario:</label>
-        <input type="text" id="usuario" required />
-        <label>Contraseña:</label>
-        <input type="password" id="clave" required />
-        <button type="submit">Entrar</button>
-      </form>
-      <p id="mensaje-error" class="error"></p>
-    </div>
+  <h1>Panel del Administrador</h1>
+
+  <div id="login">
+    <label for="adminPass">Contraseña de administrador:</label>
+    <input type="password" id="adminPass" />
+    <button onclick="login()">Ingresar</button>
+  </div>
+
+  <div id="adminPanel">
+    <h2>Quejas Recibidas</h2>
+    <table id="complaintTable">
+      <thead>
+        <tr>
+          <th>Categoría</th>
+          <th>Mensaje</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>Reporte por Categorías</h2>
+    <ul id="categoryReport"></ul>
   </div>
 
   <script>
-    function acceder(e) {
-      e.preventDefault();
-      const usuario = document.getElementById("usuario").value;
-      const clave = document.getElementById("clave").value;
-      const error = document.getElementById("mensaje-error");
+    async function login() {
+      const pass = document.getElementById("adminPass").value;
+      const hashed = await sha256(pass);
+      const storedHash = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"; // hash de admin123
 
-      if (usuario === "admin" && clave === "1234") {
-        window.location.href = "panel.html";
+      if (hashed === storedHash) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        loadComplaints();
+        generateReport();
       } else {
-        error.textContent = "Usuario o clave incorrecta (demo)";
+        alert("Contraseña incorrecta.");
+      }
+    }
+
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function loadComplaints() {
+      const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+      const tableBody = document.getElementById("complaintTable").querySelector("tbody");
+      tableBody.innerHTML = "";
+      complaints.forEach(c => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${c.category}</td><td>${c.message}</td>`;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function generateReport() {
+      const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+      const counts = {};
+      complaints.forEach(c => {
+        counts[c.category] = (counts[c.category] || 0) + 1;
+      });
+
+      const report = document.getElementById("categoryReport");
+      report.innerHTML = "";
+      for (const category in counts) {
+        const li = document.createElement("li");
+        li.innerHTML = `<span class="category-count">${category}:</span> ${counts[category]} queja(s)`;
+        report.appendChild(li);
       }
     }
   </script>
