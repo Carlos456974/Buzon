@@ -2,59 +2,37 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Buzón de Quejas</title>
+  <title>Selecciona una Categoría</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="wrapper">
     <div class="container">
       <img src="logo.jpg" alt="Logo" class="logo" />
-      <h2>Buzón de Quejas</h2>
-      <form id="formulario">
-        <label>Nombre (opcional):</label>
-        <input type="text" name="nombre" />
-
-        <label>Categoría:</label>
+      <h2>¿Qué tipo de queja deseas realizar?</h2>
+      <form id="categoriaForm">
+        <label>Selecciona una categoría:</label>
         <select name="categoria" required>
-          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="" disabled selected>Selecciona una opción</option>
           <option value="Prevención de accidentes">Prevención de accidentes</option>
           <option value="Mejorar el servicio">Mejorar el servicio</option>
           <option value="Violencia de género">Violencia de género</option>
           <option value="Otro">Otro</option>
         </select>
-
-        <label>Mensaje:</label>
-        <textarea name="mensaje" rows="5" required></textarea>
-
-        <button type="submit">Enviar Queja</button>
+        <button type="submit">Continuar</button>
       </form>
-      <div id="resultado" class="resultado"></div>
     </div>
   </div>
 
   <script>
-    document.getElementById("formulario").addEventListener("submit", function (e) {
+    document.getElementById("categoriaForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const categoria = this.categoria.value;
-
       if (categoria === "Violencia de género") {
         window.location.href = "violencia.html";
-        return;
+      } else {
+        window.location.href = `formulario.html?categoria=${encodeURIComponent(categoria)}`;
       }
-
-      const nombre = this.nombre.value || "Anónimo";
-      const mensaje = this.mensaje.value;
-      const resultado = document.getElementById("resultado");
-
-      resultado.innerHTML = `
-        <div class="alerta">
-          <strong>Categoría:</strong> ${categoria}<br>
-          <strong>De:</strong> ${nombre}<br><br>
-          <blockquote>${mensaje}</blockquote>
-          <p class="nota">(Simulación: este mensaje no se ha guardado realmente)</p>
-        </div>
-      `;
-      this.reset();
     });
   </script>
 </body>
