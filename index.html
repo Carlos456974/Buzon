@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Buzón de Quejas</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Buzón de Quejas</h2>
-  <form id="formulario">
-    <label>Nombre (opcional):</label><br>
-    <input type="text" name="nombre"><br><br>
+  <div class="wrapper">
+    <div class="container">
+      <img src="imagenes/logo.jpg" alt="Logo" class="logo" />
+      <h2>Buzón de Quejas</h2>
+      <form id="formulario">
+        <label>Nombre (opcional):</label>
+        <input type="text" name="nombre" />
 
-    <label>Mensaje:</label><br>
-    <textarea name="mensaje" rows="5" required></textarea><br><br>
+        <label>Mensaje:</label>
+        <textarea name="mensaje" rows="5" required></textarea>
 
-    <button type="submit">Enviar Queja</button>
-  </form>
-
-  <div id="resultado" style="margin-top:20px;"></div>
+        <button type="submit">Enviar Queja</button>
+      </form>
+      <div id="resultado" class="resultado"></div>
+    </div>
+  </div>
 
   <script>
-    document.getElementById("formulario").addEventListener("submit", function(e) {
+    document.getElementById("formulario").addEventListener("submit", function (e) {
       e.preventDefault();
       const nombre = this.nombre.value || "Anónimo";
       const mensaje = this.mensaje.value;
+      const resultado = document.getElementById("resultado");
 
-      document.getElementById("resultado").innerHTML = `
-        <p><strong>Queja enviada:</strong></p>
-        <p><em>${nombre}</em> escribió:</p>
-        <blockquote>${mensaje}</blockquote>
-        <p style="color:gray;">(Esto es una simulación, no se ha guardado nada)</p>
+      resultado.innerHTML = `
+        <div class="alerta">
+          <strong>Queja enviada:</strong><br>
+          <em>${nombre}</em> escribió:<br>
+          <blockquote>${mensaje}</blockquote>
+          <p class="nota">(Esto es una simulación, no se ha guardado nada)</p>
+        </div>
       `;
-
       this.reset();
     });
   </script>
 </body>
 </html>
+
