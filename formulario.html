@@ -2,49 +2,71 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Escribe tu queja</title>
+  <title>Formulario de Queja</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="wrapper">
     <div class="container">
       <img src="logo.jpg" alt="Logo" class="logo" />
-      <h2>Escribe tu Queja</h2>
-      <p id="categoriaMostrada"></p>
+      <h2>Formulario de Queja</h2>
+      <form id="quejaForm">
+        <label>Categoría</label>
+        <input type="text" id="categoria" name="categoria" readonly />
 
-      <form id="formNormal">
-        <label>Nombre (opcional):</label>
-        <input type="text" name="nombre" />
+        <label>Descripción de la queja</label>
+        <textarea name="descripcion" rows="5" required></textarea>
 
-        <label>Mensaje:</label>
-        <textarea name="mensaje" rows="5" required></textarea>
+        <label>¿Quieres enviar la queja de forma anónima?</label>
+        <select name="anonimo" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="Sí">Sí</option>
+          <option value="No">No</option>
+        </select>
 
-        <button type="submit">Enviar</button>
+        <button type="submit">Enviar Queja</button>
+        <div class="error" id="errorMsg"></div>
+        <div class="alerta" id="successMsg" style="display:none;">¡Queja enviada correctamente!</div>
       </form>
-
-      <div id="resultado" class="resultado"></div>
     </div>
   </div>
 
   <script>
+    // Extraer categoría de la URL
     const urlParams = new URLSearchParams(window.location.search);
-    const categoria = urlParams.get("categoria") || "Otro";
-    document.getElementById("categoriaMostrada").innerText = `Categoría seleccionada: ${categoria}`;
+    const categoria = urlParams.get('categoria');
+    const categoriaInput = document.getElementById('categoria');
+    const form = document.getElementById('quejaForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
 
-    document.getElementById("formNormal").addEventListener("submit", function (e) {
+    if (categoria) {
+      categoriaInput.value = categoria;
+    } else {
+      categoriaInput.value = "No especificada";
+    }
+
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
-      const nombre = this.nombre.value || "Anónimo";
-      const mensaje = this.mensaje.value;
+      errorMsg.textContent = "";
+      successMsg.style.display = "none";
 
-      document.getElementById("resultado").innerHTML = `
-        <div class="alerta">
-          <strong>Categoría:</strong> ${categoria}<br>
-          <strong>De:</strong> ${nombre}<br><br>
-          <blockquote>${mensaje}</blockquote>
-          <p class="nota">(Simulación: este mensaje no se ha guardado realmente)</p>
-        </div>
-      `;
-      this.reset();
+      const descripcion = this.descripcion.value.trim();
+      const anonimo = this.anonimo.value;
+
+      if (!descripcion) {
+        errorMsg.textContent = "Por favor, escribe una descripción para la queja.";
+        return;
+      }
+      if (!anonimo) {
+        errorMsg.textContent = "Por favor, selecciona si quieres enviar la queja de forma anónima.";
+        return;
+      }
+
+      // Aquí iría el envío al servidor o guardado, pero por ahora solo simulo éxito
+      successMsg.style.display = "block";
+      form.reset();
+      categoriaInput.value = categoria;
     });
   </script>
 </body>
