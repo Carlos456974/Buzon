@@ -9,33 +9,25 @@
   <div class="wrapper">
     <div class="container">
       <img src="logo.jpg" alt="Logo" class="logo" />
-      <h2>Buzón de Quejas y Sugerencias</h2>
-      <p class="descripcion">
-        Este espacio es anónimo y confidencial. Tu opinión nos ayuda a mejorar el ambiente, la seguridad y la calidad del servicio.
-      </p>
+      <h2>Buzón de Quejas</h2>
       <form id="formulario">
-        <label>Categoría:</label>
-        <select name="categoria" required>
-          <option value="">-- Selecciona una opción --</option>
-          <option>Prevenir accidentes</option>
-          <option>Aumentar la calidad</option>
-          <option>Mejorar el servicio</option>
-          <option>Reducir costos</option>
-          <option>Mejorar el inmueble</option>
-          <option>Ahorrar tiempo</option>
-          <option>Violencia de género</option>
-        </select>
-
         <label>Nombre (opcional):</label>
         <input type="text" name="nombre" />
 
-        <label>Escribe tu queja o sugerencia:</label>
+        <label>Categoría:</label>
+        <select name="categoria" required>
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="Prevención de accidentes">Prevención de accidentes</option>
+          <option value="Mejorar el servicio">Mejorar el servicio</option>
+          <option value="Violencia de género">Violencia de género</option>
+          <option value="Otro">Otro</option>
+        </select>
+
+        <label>Mensaje:</label>
         <textarea name="mensaje" rows="5" required></textarea>
 
-        <p class="anonimo">Tu queja será enviada de forma <strong>anónima</strong>.</p>
-        <button type="submit">Enviar</button>
+        <button type="submit">Enviar Queja</button>
       </form>
-
       <div id="resultado" class="resultado"></div>
     </div>
   </div>
@@ -43,8 +35,14 @@
   <script>
     document.getElementById("formulario").addEventListener("submit", function (e) {
       e.preventDefault();
-      const nombre = this.nombre.value || "Anónimo";
       const categoria = this.categoria.value;
+
+      if (categoria === "Violencia de género") {
+        window.location.href = "violencia.html";
+        return;
+      }
+
+      const nombre = this.nombre.value || "Anónimo";
       const mensaje = this.mensaje.value;
       const resultado = document.getElementById("resultado");
 
