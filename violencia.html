@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Queja por Violencia de Género</title>
+  <title>Violencia de Género</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -10,20 +10,21 @@
     <div class="container">
       <img src="logo.jpg" alt="Logo" class="logo" />
       <h2>Denuncia de Violencia de Género</h2>
+
       <p class="descripcion">
-        Esta sección está destinada exclusivamente a reportar situaciones relacionadas con violencia de género.
-        <strong>La información proporcionada será tratada con absoluta confidencialidad.</strong><br>
-        Nos comprometemos a brindarte apoyo y seguridad en todo momento.
+        Esta sección es exclusivamente para reportar casos de <strong>violencia de género</strong>.<br>
+        <strong>Tu información será tratada con la mayor discreción y confidencialidad.</strong> Nos importa tu seguridad y bienestar. 
+        Puedes expresar tu situación libremente y con confianza. Estamos aquí para ayudarte.
       </p>
 
       <form id="formViolencia">
-        <label>Nombre completo:</label>
+        <label>Nombre completo (requerido):</label>
         <input type="text" name="nombre" required />
 
         <label>Describe tu situación:</label>
         <textarea name="mensaje" rows="6" required></textarea>
 
-        <p class="anonimo">Tu identidad será protegida. Puedes confiar en que este canal es seguro y confidencial.</p>
+        <p class="anonimo">Tu identidad será protegida. Este canal es seguro y confidencial.</p>
 
         <button type="submit">Enviar Queja</button>
       </form>
@@ -36,10 +37,9 @@
     document.getElementById("formViolencia").addEventListener("submit", function (e) {
       e.preventDefault();
       const nombre = this.nombre.value;
-      const mensaje = this.mensaje.value;
-      const resultado = document.getElementById("resultado");
+      const mensaje = this.message?.value || this.mensaje?.value;
 
-      resultado.innerHTML = `
+      document.getElementById("resultado").innerHTML = `
         <div class="alerta">
           <strong>Nombre:</strong> ${nombre}<br><br>
           <blockquote>${mensaje}</blockquote>
@@ -51,3 +51,4 @@
   </script>
 </body>
 </html>
+
