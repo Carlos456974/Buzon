@@ -1,51 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Buzón de Quejas</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #001f3f;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+    }
+
+    h1 {
+      margin-bottom: 1em;
+    }
+
+    form, #admin-login {
+      background-color: #003366;
+      padding: 20px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    select, input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #0074D9;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #mensajeError {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
   <h1>Buzón de Quejas</h1>
-  <form id="complaintForm">
-    <label for="category">Categoría:</label>
-    <select id="category" required>
-      <option value="">Seleccione una categoría</option>
-      <option>Infraestructura y mantenimiento</option>
-      <option>Limpieza e higiene</option>
-      <option>Ambiente laboral</option>
-      <option>Violencia de género</option>
-      <option>Equipos y tecnología</option>
-      <option>Ruido o distracciones</option>
-      <option>Iluminación o ventilación</option>
-      <option>Seguridad en el trabajo</option>
-      <option>Maltrato de superiores</option>
-      <option>Falta de insumos</option>
-      <option>Ideas para mejorar el ambiente</option>
-      <option>Otro</option>
+
+  <form id="quejaForm">
+    <label for="categoria">Selecciona la categoría de tu queja:</label>
+    <select id="categoria" name="categoria" required>
+      <option value="">-- Selecciona una categoría --</option>
+      <option value="Infraestructura y mantenimiento">Infraestructura y mantenimiento</option>
+      <option value="Limpieza e higiene">Limpieza e higiene</option>
+      <option value="Ambiente laboral">Ambiente laboral</option>
+      <option value="Violencia de género">Violencia de género</option>
+      <option value="Equipos y tecnología">Equipos y tecnología</option>
+      <option value="Ruido o distracciones">Ruido o distracciones</option>
+      <option value="Iluminación o ventilación">Iluminación o ventilación</option>
+      <option value="Seguridad en el trabajo">Seguridad en el trabajo</option>
+      <option value="Maltrato de superiores">Maltrato de superiores</option>
+      <option value="Falta de insumos">Falta de insumos</option>
+      <option value="Ideas para mejorar el ambiente">Ideas para mejorar el ambiente</option>
+      <option value="Otro">Otro</option>
     </select>
-
-    <label for="description">Descripción:</label>
-    <textarea id="description" required></textarea>
-
-    <button type="submit">Enviar Queja</button>
+    <button type="submit">Continuar</button>
   </form>
 
+  <div id="admin-login">
+    <h2>Acceso para Administrador</h2>
+    <label for="adminPassword">Contraseña:</label>
+    <input type="password" id="adminPassword" placeholder="Ingrese contraseña">
+    <button onclick="loginAdmin()">Entrar</button>
+    <div id="mensajeError"></div>
+  </div>
+
   <script>
-    document.getElementById("complaintForm").addEventListener("submit", function (e) {
+    // Redirige a panel.html con la categoría seleccionada
+    document.getElementById("quejaForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const category = document.getElementById("category").value;
-      const description = document.getElementById("description").value;
-
-      const complaint = { category, description, date: new Date().toISOString() };
-
-      const stored = JSON.parse(localStorage.getItem("complaints") || "[]");
-      stored.push(complaint);
-      localStorage.setItem("complaints", JSON.stringify(stored));
-
-      alert("Queja enviada correctamente.");
-      this.reset();
+      const categoria = document.getElementById("categoria").value;
+      if (categoria) {
+        window.location.href = "panel.html?categoria=" + encodeURIComponent(categoria);
+      }
     });
+
+    // Hash simple para simular seguridad de contraseña
+    function hash(texto) {
+      let hash = 0;
+      for (let i = 0; i < texto.length; i++) {
+        hash = (hash << 5) - hash + texto.charCodeAt(i);
+        hash |= 0;
+      }
+      return hash;
+    }
+
+    function loginAdmin() {
+      const clave = document.getElementById("adminPassword").value;
+      const hashCorrecto = -1546741695; // hash para "admin123"
+      const hashIngresado = hash(clave);
+
+      if (hashIngresado === hashCorrecto) {
+        window.location.href = "admin.html";
+      } else {
+        document.getElementById("mensajeError").textContent = "Contraseña incorrecta.";
+      }
+    }
   </script>
 </body>
 </html>
